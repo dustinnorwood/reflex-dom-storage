@@ -148,7 +148,7 @@ instance PrimMonad m => PrimMonad (StorageT t k m) where
   type PrimState (StorageT t k m) = PrimState m
   primitive = lift . primitive
 
-instance (Prerender js t m, Reflex t, Monad m, GCompare k) => Prerender js t (StorageT t k m) where
+instance (Prerender t m, Reflex t, Monad m, GCompare k) => Prerender t (StorageT t k m) where
   type Client (StorageT t k m) = StorageT t k (Client m)
   prerender server client = StorageT $ do
     env <- ask

@@ -128,9 +128,6 @@ instance (DomBuilder t m, MonadHold t m, MonadFix m, GCompare k) => DomBuilder t
 
 instance HasDocument m => HasDocument (StorageT t k m)
 
-instance HasJSContext m => HasJSContext (StorageT t k m) where
-  type JSContextPhantom (StorageT t k m) = JSContextPhantom m
-  askJSContext = StorageT askJSContext
 #ifndef ghcjs_HOST_OS
 instance MonadJSM m => MonadJSM (StorageT t k m)
 #endif
@@ -159,10 +156,6 @@ instance (Prerender js t m, Reflex t, Monad m, GCompare k) => Prerender js t (St
     let (a, r) = splitDynPure d
     lift . tellEvent $ switchPromptlyDyn r
     pure a
-
-instance HasJS x m => HasJS x (StorageT t k m) where
-  type JSX (StorageT t k m) = JSX m
-  liftJS = lift . liftJS
 
 
 {-
